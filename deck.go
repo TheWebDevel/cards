@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
 )
@@ -104,4 +105,17 @@ func newDeckFromFile(filename string) deck {
 	// Convert the string slice of type string []string
 	// Then conver the slice of type string to a value of type deck
 	return deck(strings.Split(string(bs), ","))
+}
+
+// A function used to shuffle our deck of cards
+// It has a receiver d of type deck
+func (d deck) shuffle() {
+	// For each index in cards of type deck
+	for i := range d {
+		// Create a random number with a max limit of len(d) - 1
+		newPosition := rand.Intn(len(d) - 1)
+
+		// Swap the current and the random index we generated
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
 }
