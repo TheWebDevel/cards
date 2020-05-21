@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 )
 
@@ -80,4 +81,27 @@ func (d deck) saveToFile(filename string) error {
 	// 2. byte slice (our cards)
 	// 3. permissions (who has access and who dont)
 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+}
+
+// This function creates a deck from a file
+// It does not require a receiver because we
+// don't have a deck yet which is obvious.
+func newDeckFromFile(filename string) deck {
+	// This function accepts the file name as a parameter
+	//  and do a multiple return the required byte slice & error if any.
+	bs, err := ioutil.ReadFile(filename)
+
+	if err != nil {
+		// There are two possible options here,
+		// 1. Log the error and return a call to newDeck()
+		// 2. Log the error and entirely quit the program
+		fmt.Println("Error: ", err)
+		// Exit the program entirely
+		os.Exit(1)
+	}
+
+	// Convert the byte slice into string
+	// Convert the string slice of type string []string
+	// Then conver the slice of type string to a value of type deck
+	return deck(strings.Split(string(bs), ","))
 }
