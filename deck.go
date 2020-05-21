@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+)
 
 // Create a new type of deck which
 // is a slice of strings
@@ -52,4 +56,28 @@ func (d deck) print() {
 // values of type deck
 func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
+}
+
+// This function has a receiver d of type deck
+// and a return type of string.
+// The purpose of this function is to conver the
+// deck type value to a string type.
+func (d deck) toString() string {
+	// convert deck to slice of string
+	// join the slice of string with the seperator
+	// which results in a single string.
+	return strings.Join([]string(d), ",")
+}
+
+// This a function to save the deck to a file
+// which has a receiver d of type deck and accepts
+// an argument named filename of type string
+// It also can return an error if occurs
+func (d deck) saveToFile(filename string) error {
+	// We then write the cards to a file
+	// This function accepts 3 parameters, namely:
+	// 1. filename
+	// 2. byte slice (our cards)
+	// 3. permissions (who has access and who dont)
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
 }
