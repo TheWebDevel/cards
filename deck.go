@@ -43,3 +43,13 @@ func (d deck) print() {
 		fmt.Println(i, card)
 	}
 }
+
+// A function to get some cards based on the hand size
+// This function accepts 2 args which are a
+// deck of cards d with type deck & hand size of type int
+// This function returns two sepearate slices of deck
+// The (deck, deck) denotes that we are returning two
+// values of type deck
+func deal(d deck, handSize int) (deck, deck) {
+	return d[:handSize], d[handSize:]
+}
